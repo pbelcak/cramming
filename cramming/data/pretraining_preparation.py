@@ -121,10 +121,11 @@ def preprocess_dataset(cfg_data, download_path, num_threads=1, max_raw_chunk_siz
                 name,
                 **hf_dataset_settings,
                 cache_dir=download_path,
+                trust_remote_code=True,
                 streaming=details.streaming,
             )
         elif details.provider == "local":
-            raw_dataset = datasets.load_dataset(details.file_type, data_files=details.files, streaming=details.streaming)[details.split]
+            raw_dataset = datasets.load_dataset(details.file_type, data_files=details.files, streaming=details.streaming, trust_remote_code=True)[details.split]
         else:
             raise ValueError(f"Invalid data provider {details.provider} given.")
 
@@ -457,7 +458,7 @@ def main_process_first():
 def _load_from_hub(cfg_data, data_path):
     from huggingface_hub import hf_hub_download
 
-    tokenized_dataset = datasets.load_dataset(cfg_data.hf_location, "default", streaming=cfg_data.streaming, cache_dir=data_path)["train"]
+    tokenized_dataset = datasets.load_dataset(cfg_data.hf_location, "default", streaming=cfg_data.streaming, cache_dir=data_path, trust_remote_code=True)["train"]
     tokenized_dataset = tokenized_dataset.with_format("torch")
 
     tokenizer_req_files = ["special_tokens_map.json", "tokenizer.json", "tokenizer_config.json"]

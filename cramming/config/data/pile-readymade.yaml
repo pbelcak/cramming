@@ -5,7 +5,7 @@ sources:
   hub:
     provider: hub
 hf_location: JonasGeiping/the_pile_WordPiecex32768_2efdb9d060d1ae95faf952ec1a50f020
-streaming: True
+streaming: False
 
 vocab_size: 32768 # cannot be changed!
 seq_length: 128 # cannot be changed!
